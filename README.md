@@ -42,7 +42,11 @@ The **Hotel Management System** is a comprehensive web application designed to s
 - ✅ **Filter and Search** capabilities
 - ✅ **Data Integrity** with unique constraint validation
 
----
+### 🎥 Video Demonstration
+
+Watch a complete demonstration of the system in action:
+
+## [![Hotel Management System Demo](https://img.shields.io/badge/▶️_Watch_Demo-Video-red?style=for-the-badge)](https://github.com/OrnellaGrigolato/hotel-management-system/blob/master/Hotel%20Management%20System%20Demo.mp4)
 
 ## ✨ Features
 

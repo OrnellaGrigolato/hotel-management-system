@@ -42,7 +42,11 @@ El **Sistema de Gestión Hotelera** es una aplicación web completa diseñada pa
 - ✅ **Capacidades de Filtrado y Búsqueda**
 - ✅ **Integridad de Datos** con validación de restricciones únicas
 
----
+### 🎥 Video Demostrativo
+
+Mira una demostración completa del sistema en acción:
+
+## [![Demo Sistema de Gestión Hotelera](https://img.shields.io/badge/▶️_Ver_Demo-Video-red?style=for-the-badge)](https://github.com/OrnellaGrigolato/hotel-management-system/blob/master/Hotel%20Management%20System%20Demo.mp4)
 
 ## ✨ Características
 
