@@ -475,7 +475,7 @@ uri="jakarta.tags.core" %>
           </div>
           <c:set var="activeCount" value="0" />
           <c:forEach var="h" items="${huespedes}">
-            <c:if test="${h.estado == 'activo'}">
+            <c:if test="${h.estado == 'Activo'}">
               <c:set var="activeCount" value="${activeCount + 1}" />
             </c:if>
           </c:forEach>

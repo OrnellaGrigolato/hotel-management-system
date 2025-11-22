@@ -1,11 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Habitación ${habitacion.numeroDeHabitacion} - Hotel Management System</title>
+    <title>Agregar Nueva Habitación - Hotel Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -88,49 +87,6 @@
         .form-header p {
             color: #718096;
             font-size: 1rem;
-        }
-
-        .current-info {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border-left: 4px solid #667eea;
-        }
-
-        .current-info h3 {
-            color: #2d3748;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .info-item {
-            text-align: center;
-        }
-
-        .info-label {
-            font-size: 0.8rem;
-            color: #a0aec0;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.25rem;
-        }
-
-        .info-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #2d3748;
         }
 
         .form-grid {
@@ -279,27 +235,33 @@
             margin-top: 2rem;
         }
 
-        .changes-indicator {
-            background: #fff5f5;
-            border: 1px solid #fed7d7;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+        .success-animation {
             display: none;
+            text-align: center;
+            padding: 2rem;
         }
 
-        .changes-indicator.show {
+        .success-animation.show {
             display: block;
         }
 
-        .changes-indicator i {
-            color: #e53e3e;
-            margin-right: 0.5rem;
+        .success-animation i {
+            font-size: 3rem;
+            color: #48bb78;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease-in-out;
         }
 
-        .changes-indicator span {
-            color: #742a2a;
-            font-size: 0.9rem;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
 
         @media (max-width: 768px) {
@@ -325,11 +287,6 @@
             .form-actions {
                 flex-direction: column;
             }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
         }
 
         /* Loading state */
@@ -349,54 +306,22 @@
     <div class="container">
         <div class="header">
             <h1>
-                <i class="fas fa-edit"></i>
-                Editar Habitación
+                <i class="fas fa-plus-circle"></i>
+                Nueva Habitación
             </h1>
-            <p>Modifica la información de la habitación ${habitacion.numeroDeHabitacion}</p>
+            <p>Agrega una nueva habitación al inventario del hotel</p>
         </div>
         
         <div class="form-card">
             <div class="form-header">
                 <h2>
                     <i class="fas fa-bed"></i>
-                    Actualizar Información
+                    Información de la Habitación
                 </h2>
-                <p>Realiza los cambios necesarios y guarda las modificaciones</p>
+                <p>Completa todos los campos para registrar la nueva habitación</p>
             </div>
 
-            <div class="current-info">
-                <h3>
-                    <i class="fas fa-info-circle"></i>
-                    Información Actual
-                </h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">ID Sistema</div>
-                        <div class="info-value">#${habitacion.id}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Número</div>
-                        <div class="info-value">${habitacion.numeroDeHabitacion}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Tipo</div>
-                        <div class="info-value">${habitacion.tipo}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Precio</div>
-                        <div class="info-value">$${habitacion.precioPorNoche}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="changes-indicator" id="changesIndicator">
-                <i class="fas fa-exclamation-triangle"></i>
-                <span>Has realizado cambios. No olvides guardar las modificaciones.</span>
-            </div>
-
-            <form method="post" action="${mvc.uri('editarHabitacion')}" id="editForm">
-                <input type="hidden" name="id" value="${habitacion.id}">
-                
+            <form method="post" action="${mvc.uri('guardarHabitacion')}" id="roomForm">
                 <div class="form-grid">
                     <div class="form-row">
                         <div class="form-group">
@@ -410,13 +335,12 @@
                                 id="numero"
                                 name="numero" 
                                 class="form-input"
-                                value="${habitacion.numeroDeHabitacion}"
                                 required
                                 min="1"
                                 max="9999"
                                 placeholder="Ej: 101"
                             >
-                            <span class="input-hint">Número único de identificación de la habitación</span>
+                            <span class="input-hint">Ingresa el número único de la habitación</span>
                         </div>
 
                         <div class="form-group">
@@ -426,11 +350,12 @@
                                 <span class="required">*</span>
                             </label>
                             <select id="tipo" name="tipo" class="form-select" required>
-                                <option value="simple" ${habitacion.tipo == 'simple' ? 'selected' : ''}>Simple</option>
-                                <option value="doble" ${habitacion.tipo == 'doble' ? 'selected' : ''}>Doble</option>
-                                <option value="suite" ${habitacion.tipo == 'suite' ? 'selected' : ''}>Suite</option>
+                                <option value="">Selecciona el tipo</option>
+                                <option value="simple">Simple</option>
+                                <option value="doble">Doble</option>
+                                <option value="suite">Suite</option>
                             </select>
-                            <span class="input-hint">Categoría de la habitación</span>
+                            <span class="input-hint">Selecciona la categoría de la habitación</span>
                         </div>
                     </div>
 
@@ -446,39 +371,40 @@
                                 id="precioPorNoche"
                                 name="precioPorNoche" 
                                 class="form-input price-input"
-                                value="${habitacion.precioPorNoche}"
                                 required
                                 min="0"
                                 placeholder="0.00"
                             >
                         </div>
-                        <span class="input-hint">Precio en dólares por noche de estadía</span>
+                        <span class="input-hint">Precio en ARS por noche de estadía</span>
                     </div>
                 </div>
 
                 <div class="form-actions">
-                    <a href="/habitacion/${habitacion.numeroDeHabitacion}" class="btn btn-secondary">
+                    <a href="../habitaciones" class="btn btn-secondary">
                         <i class="fas fa-times"></i>
                         Cancelar
                     </a>
                     <button type="submit" class="btn btn-primary" id="submitBtn">
                         <i class="fas fa-save"></i>
-                        Guardar Cambios
+                        Guardar Habitación
                     </button>
                 </div>
             </form>
+
+            <div class="success-animation" id="successAnimation">
+                <i class="fas fa-check-circle"></i>
+                <h3>¡Habitación guardada exitosamente!</h3>
+                <p>La habitación ha sido agregada al inventario</p>
+            </div>
         </div>
 
         <div class="navigation-buttons">
-            <a href="habitacion/${habitacion.numeroDeHabitacion}" class="btn btn-secondary">
-                <i class="fas fa-eye"></i>
-                Ver Habitación
-            </a>
-            <a href="habitaciones" class="btn btn-secondary">
+            <a href="../habitaciones" class="btn btn-secondary">
                 <i class="fas fa-list"></i>
-                Lista de Habitaciones
+                Ver Todas las Habitaciones
             </a>
-            <a href="home" class="btn btn-secondary">
+            <a href="../home" class="btn btn-secondary">
                 <i class="fas fa-home"></i>
                 Volver al Inicio
             </a>
@@ -486,64 +412,19 @@
     </div>
 
     <script>
-        // Store original values to detect changes
-        const originalValues = {
-            numero: document.getElementById('numero').value,
-            tipo: document.getElementById('tipo').value,
-            precioPorNoche: document.getElementById('precioPorNoche').value
-        };
-
-        // Function to check if form has changes
-        function checkForChanges() {
-            const currentValues = {
-                numero: document.getElementById('numero').value,
-                tipo: document.getElementById('tipo').value,
-                precioPorNoche: document.getElementById('precioPorNoche').value
-            };
-
-            const hasChanges = Object.keys(originalValues).some(key => 
-                originalValues[key] !== currentValues[key]
-            );
-
-            const indicator = document.getElementById('changesIndicator');
-            if (hasChanges) {
-                indicator.classList.add('show');
-            } else {
-                indicator.classList.remove('show');
-            }
-        }
-
-        // Add change listeners to all form inputs
-        document.getElementById('numero').addEventListener('input', checkForChanges);
-        document.getElementById('tipo').addEventListener('change', checkForChanges);
-        document.getElementById('precioPorNoche').addEventListener('input', checkForChanges);
-
-        // Form submission handling
-        document.getElementById('editForm').addEventListener('submit', function(e) {
+        // Form validation and submission handling
+        document.getElementById('roomForm').addEventListener('submit', function(e) {
             const submitBtn = document.getElementById('submitBtn');
-            const indicator = document.getElementById('changesIndicator');
-            
-            // Remove changes indicator to prevent beforeunload warning
-            indicator.classList.remove('show');
             
             // Add loading state
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            
+            // You can add additional validation here if needed
         });
 
-    
         // Auto-focus on first input
         document.getElementById('numero').focus();
-
-        // Warn before leaving page if there are unsaved changes
-        window.addEventListener('beforeunload', function(e) {
-            const indicator = document.getElementById('changesIndicator');
-            if (indicator.classList.contains('show')) {
-                e.preventDefault();
-                e.returnValue = '';
-                return '';
-            }
-        });
     </script>
 </body>
 </html>

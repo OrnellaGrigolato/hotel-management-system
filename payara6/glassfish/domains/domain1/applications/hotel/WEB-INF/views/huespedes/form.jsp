@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Editar Huésped ${huesped.nombre} - Hotel Management System</title>
+    <title>Agregar Nuevo Huésped - Hotel Management System</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -91,89 +91,6 @@ uri="jakarta.tags.core" %>
       .form-header p {
         color: #718096;
         font-size: 1rem;
-      }
-
-      .current-info {
-        background: linear-gradient(
-          135deg,
-          rgba(240, 147, 251, 0.05),
-          rgba(245, 87, 108, 0.05)
-        );
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        border-left: 4px solid #f093fb;
-      }
-
-      .current-info h3 {
-        color: #2d3748;
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .guest-current-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
-      }
-
-      .guest-current-avatar {
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #f093fb, #f5576c);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 700;
-        text-transform: uppercase;
-      }
-
-      .guest-current-name {
-        flex: 1;
-      }
-
-      .guest-current-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #2d3748;
-      }
-
-      .guest-current-doc {
-        font-size: 0.9rem;
-        color: #a0aec0;
-      }
-
-      .info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
-      }
-
-      .info-item {
-        text-align: center;
-      }
-
-      .info-label {
-        font-size: 0.8rem;
-        color: #a0aec0;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 0.25rem;
-      }
-
-      .info-value {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #2d3748;
       }
 
       .form-grid {
@@ -291,27 +208,21 @@ uri="jakarta.tags.core" %>
         margin-top: 2rem;
       }
 
-      .changes-indicator {
-        background: #fff5f5;
-        border: 1px solid #fed7d7;
-        border-radius: 8px;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
+      .success-animation {
         display: none;
+        text-align: center;
+        padding: 2rem;
       }
 
-      .changes-indicator.show {
+      .success-animation.show {
         display: block;
       }
 
-      .changes-indicator i {
-        color: #e53e3e;
-        margin-right: 0.5rem;
-      }
-
-      .changes-indicator span {
-        color: #742a2a;
-        font-size: 0.9rem;
+      .success-animation i {
+        font-size: 3rem;
+        color: #48bb78;
+        margin-bottom: 1rem;
+        animation: bounce 1s ease-in-out;
       }
 
       .error-message {
@@ -328,6 +239,22 @@ uri="jakarta.tags.core" %>
 
       .error-message i {
         font-size: 1.1rem;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
       }
 
       @media (max-width: 768px) {
@@ -353,16 +280,6 @@ uri="jakarta.tags.core" %>
         .form-actions {
           flex-direction: column;
         }
-
-        .guest-current-header {
-          flex-direction: column;
-          text-align: center;
-        }
-
-        .info-grid {
-          grid-template-columns: 1fr;
-          gap: 0.5rem;
-        }
       }
 
       /* Loading state */
@@ -376,58 +293,112 @@ uri="jakarta.tags.core" %>
         transform: none;
         box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
       }
+
+      /* Preview section */
+      .preview-section {
+        background: linear-gradient(
+          135deg,
+          rgba(240, 147, 251, 0.05),
+          rgba(245, 87, 108, 0.05)
+        );
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-left: 4px solid #f093fb;
+      }
+
+      .preview-section h3 {
+        color: #2d3748;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .guest-preview {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .guest-preview-avatar {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .guest-preview-info {
+        flex: 1;
+      }
+
+      .guest-preview-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 0.25rem;
+      }
+
+      .guest-preview-details {
+        font-size: 0.9rem;
+        color: #a0aec0;
+      }
+
+      .preview-empty {
+        text-align: center;
+        color: #a0aec0;
+        font-style: italic;
+        padding: 1rem;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="header">
         <h1>
-          <i class="fas fa-user-edit"></i>
-          Editar Huésped
+          <i class="fas fa-user-plus"></i>
+          Nuevo Huésped
         </h1>
-        <p>Modifica la información del huésped ${huesped.nombre}</p>
+        <p>Registra un nuevo huésped en el sistema del hotel</p>
       </div>
 
       <div class="form-card">
         <div class="form-header">
           <h2>
             <i class="fas fa-users"></i>
-            Actualizar Información Personal
+            Información del Huésped
           </h2>
-          <p>Realiza los cambios necesarios y guarda las modificaciones</p>
+          <p>Completa todos los campos para registrar al nuevo huésped</p>
         </div>
 
-        <div class="current-info">
+        <div class="preview-section" id="previewSection">
           <h3>
-            <i class="fas fa-info-circle"></i>
-            Información Actual
+            <i class="fas fa-eye"></i>
+            Vista Previa
           </h3>
-          <div class="guest-current-header">
-            <div class="guest-current-avatar">
-              ${huesped.nombre.substring(0, 1)}
-            </div>
-            <div class="guest-current-name">
-              <div class="guest-current-title">${huesped.nombre}</div>
-              <div class="guest-current-doc">Doc: ${huesped.documento}</div>
+          <div class="guest-preview" id="guestPreview">
+            <div class="guest-preview-avatar" id="previewAvatar">?</div>
+            <div class="guest-preview-info">
+              <div class="guest-preview-name" id="previewName">
+                Nombre del huésped
+              </div>
+              <div class="guest-preview-details">
+                <span id="previewDoc">Documento</span> •
+                <span id="previewPhone">Teléfono</span>
+              </div>
             </div>
           </div>
-          <div class="info-grid">
-            <div class="info-item">
-              <div class="info-label">ID Sistema</div>
-              <div class="info-value">#${huesped.id}</div>
-            </div>
-            <div class="info-item">
-              <div class="info-label">Nombre</div>
-              <div class="info-value">${huesped.nombre}</div>
-            </div>
-            <div class="info-item">
-              <div class="info-label">Documento</div>
-              <div class="info-value">${huesped.documento}</div>
-            </div>
-            <div class="info-item">
-              <div class="info-label">Teléfono</div>
-              <div class="info-value">${huesped.telefono}</div>
-            </div>
+          <div class="preview-empty" id="previewEmpty">
+            Completa el formulario para ver la vista previa
           </div>
         </div>
 
@@ -438,16 +409,11 @@ uri="jakarta.tags.core" %>
           </div>
         </c:if>
 
-        <div class="changes-indicator" id="changesIndicator">
-          <i class="fas fa-exclamation-triangle"></i>
-          <span
-            >Has realizado cambios. No olvides guardar las modificaciones.</span
-          >
-        </div>
-
-        <form method="post" action="${mvc.uri('editarHuesped')}" id="editForm">
-          <input type="hidden" name="id" value="${huesped.id}" />
-
+        <form
+          method="post"
+          action="${mvc.uri('guardarHuesped')}"
+          id="guestForm"
+        >
           <div class="form-grid">
             <div class="form-group">
               <label for="nombre" class="form-label">
@@ -460,10 +426,10 @@ uri="jakarta.tags.core" %>
                 id="nombre"
                 name="nombre"
                 class="form-input"
-                value="${huesped.nombre}"
+                value="${nombre}"
                 required
                 maxlength="100"
-                placeholder="Ej: Juan Carlos Pérez"
+                placeholder="Ej: María Fernanda González"
               />
               <span class="input-hint"
                 >Nombre y apellido completo del huésped</span
@@ -482,10 +448,10 @@ uri="jakarta.tags.core" %>
                   id="documento"
                   name="documento"
                   class="form-input"
-                  value="${huesped.documento}"
+                  value="${documento}"
                   required
-                  maxlength="20"
-                  placeholder="Ej: 12.345.678"
+                  maxlength="8"
+                  placeholder="Ej: 12345678"
                 />
                 <span class="input-hint">DNI, CI o pasaporte</span>
               </div>
@@ -501,7 +467,7 @@ uri="jakarta.tags.core" %>
                   id="telefono"
                   name="telefono"
                   class="form-input"
-                  value="${huesped.telefono}"
+                  value="${telefono}"
                   required
                   maxlength="20"
                   placeholder="Ej: +54 11 1234-5678"
@@ -514,28 +480,30 @@ uri="jakarta.tags.core" %>
           </div>
 
           <div class="form-actions">
-            <a href="huesped/${huesped.id}" class="btn btn-secondary">
+            <a href="${mvc.uri('listadoHuespedes')}" class="btn btn-secondary">
               <i class="fas fa-times"></i>
               Cancelar
             </a>
             <button type="submit" class="btn btn-primary" id="submitBtn">
               <i class="fas fa-save"></i>
-              Guardar Cambios
+              Guardar Huésped
             </button>
           </div>
         </form>
+
+        <div class="success-animation" id="successAnimation">
+          <i class="fas fa-check-circle"></i>
+          <h3>¡Huésped registrado exitosamente!</h3>
+          <p>El huésped ha sido agregado al sistema</p>
+        </div>
       </div>
 
       <div class="navigation-buttons">
-        <a href="huesped/${huesped.id}" class="btn btn-secondary">
-          <i class="fas fa-eye"></i>
-          Ver Huésped
-        </a>
-        <a href="huespedes" class="btn btn-secondary">
+        <a href="${mvc.uri('listadoHuespedes')}" class="btn btn-secondary">
           <i class="fas fa-list"></i>
-          Lista de Huéspedes
+          Ver Todos los Huéspedes
         </a>
-        <a href="home" class="btn btn-secondary">
+        <a href="../home" class="btn btn-secondary">
           <i class="fas fa-home"></i>
           Volver al Inicio
         </a>
@@ -543,53 +511,69 @@ uri="jakarta.tags.core" %>
     </div>
 
     <script>
-      // Store original values to detect changes
-      const originalValues = {
-        nombre: document.getElementById("nombre").value,
-        documento: document.getElementById("documento").value,
-        telefono: document.getElementById("telefono").value,
-      };
+      // Live preview functionality
+      function updatePreview() {
+        const nombre = document.getElementById("nombre").value.trim();
+        const documento = document.getElementById("documento").value.trim();
+        const telefono = document.getElementById("telefono").value.trim();
 
-      // Function to check if form has changes
-      function checkForChanges() {
-        const currentValues = {
-          nombre: document.getElementById("nombre").value,
-          documento: document.getElementById("documento").value,
-          telefono: document.getElementById("telefono").value,
-        };
+        const preview = document.getElementById("guestPreview");
+        const previewEmpty = document.getElementById("previewEmpty");
+        const previewAvatar = document.getElementById("previewAvatar");
+        const previewName = document.getElementById("previewName");
+        const previewDoc = document.getElementById("previewDoc");
+        const previewPhone = document.getElementById("previewPhone");
 
-        const hasChanges = Object.keys(originalValues).some(
-          (key) => originalValues[key] !== currentValues[key]
-        );
+        if (nombre || documento || telefono) {
+          preview.style.display = "flex";
+          previewEmpty.style.display = "none";
 
-        const indicator = document.getElementById("changesIndicator");
-        if (hasChanges) {
-          indicator.classList.add("show");
+          // Update avatar
+          if (nombre) {
+            previewAvatar.textContent = nombre.charAt(0).toUpperCase();
+          } else {
+            previewAvatar.textContent = "?";
+          }
+
+          // Update name
+          previewName.textContent = nombre || "Nombre del huésped";
+
+          // Update document
+          previewDoc.textContent = documento || "Documento";
+
+          // Update phone
+          previewPhone.textContent = telefono || "Teléfono";
         } else {
-          indicator.classList.remove("show");
+          preview.style.display = "none";
+          previewEmpty.style.display = "block";
         }
       }
 
-      // Add change listeners to all form inputs
+      // Add input listeners
       document
         .getElementById("nombre")
-        .addEventListener("input", checkForChanges);
+        .addEventListener("input", updatePreview);
       document
         .getElementById("documento")
-        .addEventListener("input", checkForChanges);
+        .addEventListener("input", updatePreview);
       document
         .getElementById("telefono")
-        .addEventListener("input", checkForChanges);
+        .addEventListener("input", updatePreview);
 
-      // Form submission handling
+      // Form validation and submission handling
       document
-        .getElementById("editForm")
+        .getElementById("guestForm")
         .addEventListener("submit", function (e) {
+          const documento = document.getElementById("documento").value.trim();
           const submitBtn = document.getElementById("submitBtn");
-          const indicator = document.getElementById("changesIndicator");
 
-          // Remove changes indicator to prevent beforeunload warning
-          indicator.classList.remove("show");
+          // Validate document length
+          if (documento.length > 8) {
+            e.preventDefault();
+            alert("El documento no puede tener más de 8 caracteres");
+            document.getElementById("documento").focus();
+            return false;
+          }
 
           // Add loading state
           submitBtn.disabled = true;
@@ -600,29 +584,8 @@ uri="jakarta.tags.core" %>
       // Auto-focus on first input
       document.getElementById("nombre").focus();
 
-      // Warn before leaving page if there are unsaved changes
-      window.addEventListener("beforeunload", function (e) {
-        const indicator = document.getElementById("changesIndicator");
-        if (indicator.classList.contains("show")) {
-          e.preventDefault();
-          e.returnValue = "";
-          return "";
-        }
-      });
-
-      // Phone number formatting (optional enhancement)
-      document
-        .getElementById("telefono")
-        .addEventListener("input", function (e) {
-          // You can add phone formatting logic here if needed
-        });
-
-      // Document number formatting (optional enhancement)
-      document
-        .getElementById("documento")
-        .addEventListener("input", function (e) {
-          // You can add document formatting logic here if needed
-        });
+      // Initial preview update if there are values (from validation errors)
+      updatePreview();
     </script>
   </body>
 </html>

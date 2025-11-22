@@ -50,6 +50,7 @@
     <server config-ref="server-config" name="server">
       <application-ref ref="__admingui" virtual-servers="__asadmin"></application-ref>
       <application-ref ref="unidad2" virtual-servers="server"></application-ref>
+      <application-ref ref="hotel" virtual-servers="server"></application-ref>
       <resource-ref ref="jdbc/__TimerPool"></resource-ref>
       <resource-ref ref="jdbc/__default"></resource-ref>
       <resource-ref ref="concurrent/__defaultManagedExecutorService"></resource-ref>
@@ -568,12 +569,27 @@
   <deployment-groups></deployment-groups>
   <clusters></clusters>
   <applications>
-    <application deployment-time="1565" context-root="/unidad2" object-type="user" name="unidad2" location="${com.sun.aas.instanceRootURI}/applications/unidad2/" time-deployed="1763810989040">
+    <application deployment-time="2106" context-root="/unidad2" object-type="user" name="unidad2" location="${com.sun.aas.instanceRootURI}/applications/unidad2/" time-deployed="1763817731641">
       <property name="archiveType" value="war"></property>
       <property name="defaultAppName" value="FINAL"></property>
       <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/unidad2/FINAL.war"></property>
       <property name="org.glassfish.ejb.container.application_unique_id" value="0"></property>
       <module name="unidad2">
+        <engine sniffer="cdi"></engine>
+        <engine sniffer="health"></engine>
+        <engine sniffer="metrics"></engine>
+        <engine sniffer="openapi"></engine>
+        <engine sniffer="config"></engine>
+        <engine sniffer="security"></engine>
+        <engine sniffer="web"></engine>
+      </module>
+    </application>
+    <application deployment-time="5269" context-root="/hotel" object-type="user" name="hotel" location="${com.sun.aas.instanceRootURI}/applications/hotel/" time-deployed="1763818182277">
+      <property name="archiveType" value="war"></property>
+      <property name="defaultAppName" value="FINAL"></property>
+      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/hotel/FINAL.war"></property>
+      <property name="org.glassfish.ejb.container.application_unique_id" value="0"></property>
+      <module name="hotel">
         <engine sniffer="cdi"></engine>
         <engine sniffer="health"></engine>
         <engine sniffer="metrics"></engine>
