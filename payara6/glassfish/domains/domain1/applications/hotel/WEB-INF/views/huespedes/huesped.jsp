@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Huésped ${h.nombre} - Hotel Management System</title>
+    <title>Huésped ${h.nombre} - Sistema de Gestión Hotelera</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -665,7 +665,7 @@ uri="jakarta.tags.core" %>
       </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
+    <!-- Modal de Confirmación de Eliminación -->
     <div class="modal-overlay" id="deleteModal">
       <div class="modal">
         <i
@@ -704,7 +704,7 @@ uri="jakarta.tags.core" %>
         document.body.style.overflow = "auto";
       }
 
-      // Close modal when clicking outside
+      // Cerrar modal al hacer clic fuera
       document
         .getElementById("deleteModal")
         .addEventListener("click", function (e) {
@@ -713,7 +713,7 @@ uri="jakarta.tags.core" %>
           }
         });
 
-      // Close modal with Escape key
+      // Cerrar modal con la tecla Escape
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
           hideDeleteModal();

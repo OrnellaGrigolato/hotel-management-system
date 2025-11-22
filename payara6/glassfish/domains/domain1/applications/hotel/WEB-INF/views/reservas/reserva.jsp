@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reserva #${r.id} - Hotel Management System</title>
+    <title>Reserva #${r.id} - Sistema de Gestión Hotelera</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -727,7 +727,7 @@ uri="jakarta.tags.core" %>
       </div>
     </div>
 
-    <!-- Cancel Confirmation Modal -->
+    <!-- Cancel Modal -->
     <div class="modal-overlay" id="cancelModal">
       <div class="modal">
         <i
@@ -767,7 +767,7 @@ uri="jakarta.tags.core" %>
         document.body.style.overflow = "auto";
       }
 
-      // Close modal when clicking outside
+      // Cerrar el modal al hacer clic fuera del modal
       document
         .getElementById("cancelModal")
         .addEventListener("click", function (e) {
@@ -776,7 +776,7 @@ uri="jakarta.tags.core" %>
           }
         });
 
-      // Close modal with Escape key
+      // Cerrar el modal con la tecla Escape
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
           hideCancelModal();

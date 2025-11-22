@@ -75,7 +75,7 @@ public class AppController {
     }
 
     /**
-     * Devuelve el formulario para agregar un nuevo autor.
+     * Devuelve el formulario para agregar una nueva habitación.
      * 
      * @return
      * @throws Exception 
@@ -190,7 +190,7 @@ public class AppController {
     }
 
     /**
-     * Devuelve el listado de habitaciones.
+     * Devuelve el listado de huespedes.
      * 
      * @return
      * @throws Exception 
@@ -206,7 +206,7 @@ public class AppController {
     }
 
     /**
-     * Devuelve la información de un habitacion.
+     * Devuelve la información de un huesped.
      * 
      * @param id
      * @return
@@ -222,7 +222,7 @@ public class AppController {
     }
 
     /**
-     * Elimina una habitacion.
+     * Elimina un huesped.
      * 
      *  @param id
      * @throws Exception 
@@ -237,7 +237,7 @@ public class AppController {
     }
 
      /**
-     * Devuelve el formulario para agregar un nuevo autor.
+     * Devuelve el formulario para agregar un nuevo huesped.
      * 
      * @return
      * @throws Exception 
@@ -268,16 +268,16 @@ public class AppController {
             Integer idHuesped = repositorio.guardarHuesped(nombre, telefono, documento);
             return "redirect:huesped/" + idHuesped;
         } catch (SQLException e) {
-            // Check if it's a duplicate documento error
+            // Verificar si es un error de documento duplicado
             if (e.getMessage().contains("Ya existe un huésped con el documento")) {
-                // Add error message to model and return to form
+                // Agregar mensaje de error al modelo y regresar al formulario
                 models.put("error", e.getMessage());
                 models.put("nombre", nombre);
                 models.put("telefono", telefono);
                 models.put("documento", documento);
                 return "huespedes/form.jsp";
             } else {
-                // Re-throw other SQL exceptions
+                // Volver a lanzar otras excepciones SQL
                 throw e;
             }
         }
@@ -303,9 +303,9 @@ public class AppController {
             repositorio.editarHuesped(id, nombre, telefono, documento);
             return "redirect:huesped/" + id;
         } catch (SQLException e) {
-            // Check if it's a duplicate documento error
+            // Verificar si es un error de documento duplicado
             if (e.getMessage().contains("Ya existe otro huésped con el documento")) {
-                // Add error message to model and return to edit form
+                // Agregar mensaje de error al modelo y regresar al formulario de edición
                 models.put("error", e.getMessage());
                 Huesped huesped = new Huesped();
                 huesped.setId(id);
@@ -315,14 +315,14 @@ public class AppController {
                 models.put("huesped", huesped);
                 return "huespedes/form_de_edicion.jsp";
             } else {
-                // Re-throw other SQL exceptions
+                // Volver a lanzar otras excepciones SQL
                 throw e;
             }
         }
     }
 
     /**
-     * Devuelve el formulario para editar una habitación con los datos cargados.
+     * Devuelve el formulario para editar un huésped con los datos cargados.
      * 
      * @param id
      * @param tipo
@@ -388,7 +388,10 @@ public class AppController {
         models.put("huespedes", huespedes);
         
         return "reservas/form.jsp";
-    }    /**
+    }    
+    
+    
+    /**
      * Guarda una nueva reserva con los datos recibidos.
      * 
      * @param idHabitacion

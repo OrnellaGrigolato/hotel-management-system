@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Nueva Habitación - Hotel Management System</title>
+    <title>Agregar Nueva Habitación - Sistema de Gestión Hotelera</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -412,18 +412,17 @@
     </div>
 
     <script>
-        // Form validation and submission handling
+        // Validación y manejo de envío del formulario
         document.getElementById('roomForm').addEventListener('submit', function(e) {
             const submitBtn = document.getElementById('submitBtn');
             
-            // Add loading state
+            // Agregar estado de carga
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
             
-            // You can add additional validation here if needed
         });
 
-        // Auto-focus on first input
+        // Auto-focus en el primer input
         document.getElementById('numero').focus();
     </script>
 </body>

@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestión de Habitaciones - Hotel Management System</title>
+    <title>Gestión de Habitaciones - Sistema de Gestión Hotelera</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -339,20 +339,18 @@ uri="jakarta.tags.core" %>
       function onTipoChange() {
         const select = document.getElementsByName("tipo")[0];
         const selectedValue = select.value;
-        console.log("selected value", selectedValue);
-
-        // Add loading state
+        // Agregar estado de carga
         const container = document.querySelector(".rooms-grid");
         container.innerHTML =
           '<div style="text-align: center; padding: 2rem; grid-column: 1 / -1;"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #667eea;"></i><p style="margin-top: 1rem; color: #4a5568;">Cargando habitaciones...</p></div>';
 
-        // Make AJAX call to servlet
+        // Realizar llamada al servlet
         fetch("filtrarHabitaciones/" + selectedValue, {
           method: "GET",
         })
           .then((response) => response.text())
           .then((data) => {
-            // Replace the current page content with the response
+            // Reemplazar el contenido actual de la página con la respuesta
             document.open();
             document.write(data);
             document.getElementById("select").value = selectedValue;

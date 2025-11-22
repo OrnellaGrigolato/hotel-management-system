@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Reserva - Hotel Management System</title>
+    <title>Nueva Reserva - Sistema de Gestión Hotelera</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -557,30 +557,30 @@
     </div>
 
     <script>
-        // Set minimum dates
+        // Establecer fechas mínimas
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('fechaDeEntrada').min = today;
         document.getElementById('fechaDeSalida').min = today;
 
-        // Update minimum checkout date when check-in changes
+        // Actualizar la fecha mínima de salida cuando cambie la fecha de entrada
         document.getElementById('fechaDeEntrada').addEventListener('change', function() {
             const checkInDate = this.value;
             const checkOutInput = document.getElementById('fechaDeSalida');
             
             if (checkInDate) {
-                // Set minimum checkout date to the day after check-in
+                // Establecer la fecha mínima de salida al día siguiente de la entrada
                 const nextDay = new Date(checkInDate);
                 nextDay.setDate(nextDay.getDate() + 1);
                 checkOutInput.min = nextDay.toISOString().split('T')[0];
                 
-                // If checkout is before new minimum, clear it
+                // Si la fecha de salida es anterior al nuevo mínimo, limpiarla
                 if (checkOutInput.value && checkOutInput.value <= checkInDate) {
                     checkOutInput.value = '';
                 }
             }
         });
 
-        // Calculate nights between dates
+        // Calcular noches entre fechas
         function calculateNights(checkIn, checkOut) {
             if (!checkIn || !checkOut) return 0;
             
@@ -592,9 +592,9 @@
             return diffDays;
         }
 
-        // Update preview with selected values
+        // Actualizar vista previa con los valores seleccionados
         function updatePreview() {
-            // Get room info
+            // Obtener información de la habitación
             const roomSelect = document.getElementById('idHabitacion');
             const roomOption = roomSelect.options[roomSelect.selectedIndex];
             const roomNumber = roomOption.dataset.number || '';
@@ -602,16 +602,16 @@
             const roomPrice = parseFloat(roomOption.dataset.price) || 0;
             console.log(roomNumber);
             
-            // Get guest info
+            // Obtener información del huésped
             const guestSelect = document.getElementById('idHuesped');
             const guestOption = guestSelect.options[guestSelect.selectedIndex];
             const guestName = guestOption.dataset.name || '';
 
-            // Get dates
+            // Obtener fechas
             const checkIn = document.getElementById('fechaDeEntrada').value;
             const checkOut = document.getElementById('fechaDeSalida').value;
 
-            // Update preview room
+            // Actualizar vista previa de la habitación
             const previewRoom = document.getElementById('previewRoom');
             if (roomNumber) {
                 previewRoom.textContent = "Hab. " + roomNumber + " (" + roomType + ")";
@@ -621,7 +621,7 @@
                 previewRoom.classList.add('placeholder');
             }
 
-            // Update preview guest
+            // Actualizar vista previa del huésped
             const previewGuest = document.getElementById('previewGuest');
             if (guestName) {
                 previewGuest.textContent = guestName;
@@ -631,7 +631,7 @@
                 previewGuest.classList.add('placeholder');
             }
 
-            // Update preview check-in
+            // Actualizar vista previa de la fecha de entrada
             const previewCheckIn = document.getElementById('previewCheckIn');
             if (checkIn) {
                 previewCheckIn.textContent = checkIn;
@@ -641,7 +641,7 @@
                 previewCheckIn.classList.add('placeholder');
             }
 
-            // Update preview check-out
+            // Actualizar vista previa de la fecha de salida
             const previewCheckOut = document.getElementById('previewCheckOut');
             if (checkOut) {
                 previewCheckOut.textContent = checkOut;
@@ -651,7 +651,7 @@
                 previewCheckOut.classList.add('placeholder');
             }
 
-            // Calculate and show pricing
+            // Calcular y mostrar precios
             if (checkIn && checkOut && roomPrice > 0) {
                 const nights = calculateNights(checkIn, checkOut);
                 const total = nights * roomPrice;
@@ -665,12 +665,12 @@
             }
         }
 
-        // Form submission handling
+        // Manejo del envío del formulario
         document.getElementById('reservationForm').addEventListener('submit', function(e) {
             const checkIn = document.getElementById('fechaDeEntrada').value;
             const checkOut = document.getElementById('fechaDeSalida').value;
 
-            // Validate dates
+            // Validar fechas
             if (checkIn && checkOut && checkIn >= checkOut) {
                 e.preventDefault();
                 alert('La fecha de salida debe ser posterior a la fecha de entrada.');
@@ -679,15 +679,15 @@
 
             const submitBtn = document.getElementById('submitBtn');
             
-            // Add loading state
+            // Agregar estado de carga
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
         });
 
-        // Auto-focus on first select
+        // Autoenfoque en el primer select
         document.getElementById('idHabitacion').focus();
 
-        // Initial preview update if there are pre-selected values
+        // Actualización inicial de la vista previa si hay valores preseleccionados
         updatePreview();
     </script>
 </body>

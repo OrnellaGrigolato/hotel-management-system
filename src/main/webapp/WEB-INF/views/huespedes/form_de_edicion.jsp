@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Editar Huésped ${huesped.nombre} - Hotel Management System</title>
+    <title>Editar Huésped ${huesped.nombre} - Sistema de Gestión Hotelera</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -543,14 +543,14 @@ uri="jakarta.tags.core" %>
     </div>
 
     <script>
-      // Store original values to detect changes
+      // Almacenar valores originales para detectar cambios
       const originalValues = {
         nombre: document.getElementById("nombre").value,
         documento: document.getElementById("documento").value,
         telefono: document.getElementById("telefono").value,
       };
 
-      // Function to check if form has changes
+      // Función para verificar si el formulario tiene cambios
       function checkForChanges() {
         const currentValues = {
           nombre: document.getElementById("nombre").value,
@@ -570,7 +570,7 @@ uri="jakarta.tags.core" %>
         }
       }
 
-      // Add change listeners to all form inputs
+      // Agregar listeners de cambio a todos los campos del formulario
       document
         .getElementById("nombre")
         .addEventListener("input", checkForChanges);
@@ -581,26 +581,26 @@ uri="jakarta.tags.core" %>
         .getElementById("telefono")
         .addEventListener("input", checkForChanges);
 
-      // Form submission handling
+      // Manejo del envío del formulario
       document
         .getElementById("editForm")
         .addEventListener("submit", function (e) {
           const submitBtn = document.getElementById("submitBtn");
           const indicator = document.getElementById("changesIndicator");
 
-          // Remove changes indicator to prevent beforeunload warning
+          // Eliminar indicador de cambios para evitar advertencia beforeunload
           indicator.classList.remove("show");
 
-          // Add loading state
+          // Agregar estado de carga
           submitBtn.disabled = true;
           submitBtn.innerHTML =
             '<i class="fas fa-spinner fa-spin"></i> Guardando...';
         });
 
-      // Auto-focus on first input
+      // Autoenfoque en el primer campo de entrada
       document.getElementById("nombre").focus();
 
-      // Warn before leaving page if there are unsaved changes
+      // Advertencia antes de salir de la página si hay cambios no guardados
       window.addEventListener("beforeunload", function (e) {
         const indicator = document.getElementById("changesIndicator");
         if (indicator.classList.contains("show")) {
@@ -610,19 +610,6 @@ uri="jakarta.tags.core" %>
         }
       });
 
-      // Phone number formatting (optional enhancement)
-      document
-        .getElementById("telefono")
-        .addEventListener("input", function (e) {
-          // You can add phone formatting logic here if needed
-        });
-
-      // Document number formatting (optional enhancement)
-      document
-        .getElementById("documento")
-        .addEventListener("input", function (e) {
-          // You can add document formatting logic here if needed
-        });
     </script>
   </body>
 </html>

@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestión de Huéspedes - Hotel Management System</title>
+    <title>Gestión de Huéspedes - Sistema de Gestión Hotelera</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -413,8 +413,7 @@ uri="jakarta.tags.core" %>
       }
     </style>
     <script>
-      //TODO: mover esta logica a un get con java
-      // Search functionality
+      // Funcionalidad de búsqueda de huéspedes
       function searchGuests() {
         const searchTerm = document
           .getElementById("searchInput")
@@ -437,7 +436,7 @@ uri="jakarta.tags.core" %>
         });
       }
 
-      // Real-time search
+      // Búsqueda en tiempo real
       document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.getElementById("searchInput");
         if (searchInput) {

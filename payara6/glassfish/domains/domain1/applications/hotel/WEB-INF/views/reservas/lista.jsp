@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestión de Reservas - Hotel Management System</title>
+    <title>Gestión de Reservas - Sistema de Gestión Hotelera</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -684,7 +684,7 @@ uri="jakarta.tags.core" %>
     </div>
 
     <script>
-      // Calculate statistics
+      // Calcular estadísticas
       function calculateStats() {
         const reservations = document.querySelectorAll(".reservation-card");
         const rooms = new Set();
@@ -707,25 +707,25 @@ uri="jakarta.tags.core" %>
         document.getElementById("uniqueGuests").textContent = guests.size;
       }
 
-      // Call on page load
+      // Llamar al cargar la página
       calculateStats();
 
       function onTipoChange() {
         const select = document.getElementsByName("tipo")[0];
         const selectedValue = select.value;
 
-        // Add loading state
+        // Agregar estado de carga
         const container = document.querySelector(".reservations-grid");
         container.innerHTML =
           '<div class="loading-state"><i class="fas fa-spinner fa-spin"></i><p style="margin-top: 1rem; color: #4a5568;">Cargando reservas...</p></div>';
 
-        // Make AJAX call to servlet
+        // Realizar llamada al servlet
         fetch("filtrarReservas/" + selectedValue, {
           method: "GET",
         })
           .then((response) => response.text())
           .then((data) => {
-            // Replace the current page content with the response
+            // Reemplazar el contenido actual de la página con la respuesta
             document.open();
             document.write(data);
             document.getElementById("select").value = selectedValue;
@@ -739,7 +739,7 @@ uri="jakarta.tags.core" %>
       }
 
       function onFechaChange() {
-        // Trim the values to remove any whitespace
+        // Eliminar espacios en blanco de los valores
         const fechaInicio = document.getElementById("fechaInicio").value.trim();
         const fechaFin = document.getElementById("fechaFin").value.trim();
 
@@ -751,12 +751,12 @@ uri="jakarta.tags.core" %>
             return;
           }
 
-          // Add loading state
+          // Agregar estado de carga
           const container = document.querySelector(".reservations-grid");
           container.innerHTML =
             '<div class="loading-state"><i class="fas fa-spinner fa-spin"></i><p style="margin-top: 1rem; color: #4a5568;">Filtrando reservas...</p></div>';
 
-          // Use string concatenation to build the URL
+          // Usar concatenación de cadenas para construir la URL
           const url =
             "/unidad2/app/filtrarReservasPorFecha?fechaInicio=" +
             encodeURIComponent(fechaInicio) +
@@ -775,7 +775,7 @@ uri="jakarta.tags.core" %>
             .then((data) => {
               document.open();
               document.write(data);
-              // Restore the trimmed values after page reload
+              // Restaurar los valores recortados después de recargar la página
               document.getElementById("fechaInicio").value = fechaInicio;
               document.getElementById("fechaFin").value = fechaFin;
               document.close();
@@ -792,7 +792,7 @@ uri="jakarta.tags.core" %>
         document.getElementById("fechaInicio").value = "";
         document.getElementById("fechaFin").value = "";
 
-        // Reload the page to show all reservations
+        // Recargar la página para mostrar todas las reservas
         window.location.href = window.location.pathname;
       }
     </script>

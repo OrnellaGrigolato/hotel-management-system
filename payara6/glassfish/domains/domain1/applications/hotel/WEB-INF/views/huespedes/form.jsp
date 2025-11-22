@@ -5,7 +5,7 @@ uri="jakarta.tags.core" %>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agregar Nuevo Huésped - Hotel Management System</title>
+    <title>Agregar Nuevo Huésped - Sistema de Gestión Hotelera</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -511,7 +511,7 @@ uri="jakarta.tags.core" %>
     </div>
 
     <script>
-      // Live preview functionality
+      // Funcion para actualizar la vista previa
       function updatePreview() {
         const nombre = document.getElementById("nombre").value.trim();
         const documento = document.getElementById("documento").value.trim();
@@ -528,20 +528,20 @@ uri="jakarta.tags.core" %>
           preview.style.display = "flex";
           previewEmpty.style.display = "none";
 
-          // Update avatar
+          // Actualizar avatar
           if (nombre) {
             previewAvatar.textContent = nombre.charAt(0).toUpperCase();
           } else {
             previewAvatar.textContent = "?";
           }
 
-          // Update name
+          // Actualizar nombre
           previewName.textContent = nombre || "Nombre del huésped";
 
-          // Update document
+          // Actualizar documento
           previewDoc.textContent = documento || "Documento";
 
-          // Update phone
+          // Actualizar teléfono
           previewPhone.textContent = telefono || "Teléfono";
         } else {
           preview.style.display = "none";
@@ -549,7 +549,7 @@ uri="jakarta.tags.core" %>
         }
       }
 
-      // Add input listeners
+      // Agregar listeners de entrada
       document
         .getElementById("nombre")
         .addEventListener("input", updatePreview);
@@ -560,14 +560,14 @@ uri="jakarta.tags.core" %>
         .getElementById("telefono")
         .addEventListener("input", updatePreview);
 
-      // Form validation and submission handling
+      // Validación del formulario y manejo de envío
       document
         .getElementById("guestForm")
         .addEventListener("submit", function (e) {
           const documento = document.getElementById("documento").value.trim();
           const submitBtn = document.getElementById("submitBtn");
 
-          // Validate document length
+          // Validar longitud del documento
           if (documento.length > 8) {
             e.preventDefault();
             alert("El documento no puede tener más de 8 caracteres");
@@ -575,16 +575,16 @@ uri="jakarta.tags.core" %>
             return false;
           }
 
-          // Add loading state
+          // Agregar estado de carga
           submitBtn.disabled = true;
           submitBtn.innerHTML =
             '<i class="fas fa-spinner fa-spin"></i> Guardando...';
         });
 
-      // Auto-focus on first input
+      // Autoenfoque en el primer campo de entrada
       document.getElementById("nombre").focus();
 
-      // Initial preview update if there are values (from validation errors)
+      // Actualización inicial de la vista previa si hay valores (de errores de validación)
       updatePreview();
     </script>
   </body>

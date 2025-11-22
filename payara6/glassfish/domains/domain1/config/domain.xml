@@ -584,7 +584,7 @@
         <engine sniffer="web"></engine>
       </module>
     </application>
-    <application deployment-time="5269" context-root="/hotel" object-type="user" name="hotel" location="${com.sun.aas.instanceRootURI}/applications/hotel/" time-deployed="1763818182277">
+    <application deployment-time="2763" context-root="/hotel" object-type="user" name="hotel" location="${com.sun.aas.instanceRootURI}/applications/hotel/" time-deployed="1763822031784">
       <property name="archiveType" value="war"></property>
       <property name="defaultAppName" value="FINAL"></property>
       <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/hotel/FINAL.war"></property>

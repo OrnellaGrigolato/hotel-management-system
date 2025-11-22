@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @DataSourceDefinition(
         name = "appDS",
         className = "org.postgresql.ds.PGSimpleDataSource",
-        url = "jdbc:postgresql://localhost:5432/unidad5db?TimeZone=UTC",
+        url = "jdbc:postgresql://localhost:5432/hoteldb?TimeZone=UTC",
         user = "pw3",
         password = "fichunl")
 @ApplicationScoped
@@ -106,7 +106,7 @@ public class Repositorio {
         habitacion.setPrecioPorNoche(rs.getInt("preciopornoche"));
         habitacion.setId(rs.getInt("id"));
         
-        // Calculate estado based on active reservations
+        // Calcular estado basado en reservas activas
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pst = conn.prepareStatement(
              "SELECT COUNT(*) FROM reserva r " +
@@ -150,18 +150,6 @@ public class Repositorio {
         }
     }
 
-    // private void completarLibrosAutor(Connection conn, Autor autor) throws SQLException {
-    //     List<Libro> librosAutor = new ArrayList<>();
-    //     //COMPLETAR ACÁ EL CÓDIGO NECESARIO PARA OBTENER LOS LIBROS DEL AUTOR DADO
-    //     //...
-    //     autor.setLibros(librosAutor);
-    // }
-
-    public void guardarLibro(Autor autor, String titulo, Integer lanzamiento) throws SQLException {
-        //COMPLETAR ACÁ EL CÓDIGO NECESARIO PARA GUARDAR UN NUEVO LIBRO
-        //...
-    }
-
     public List<Huesped> getHuespedes() throws SQLException {
         List<Huesped> huespedes = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
@@ -181,7 +169,7 @@ public class Repositorio {
         huesped.setDocumento(rs.getString("documento"));
         huesped.setId(rs.getInt("id"));
         
-        // Calculate estado based on active reservations
+        // Calcular estado basado en reservas activas
         try (Connection conn = dataSource.getConnection();
              PreparedStatement pst = conn.prepareStatement(
              "SELECT COUNT(*) FROM reserva r " +
@@ -219,7 +207,7 @@ public class Repositorio {
 
         public Integer guardarHuesped(String nombre, String telefono, String documento) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            // Check if documento already exists
+            // Verificar si el documento ya existe
             try (PreparedStatement checkPst = conn.prepareStatement(
                     "SELECT COUNT(*) FROM huesped WHERE documento = ?")) {
                 checkPst.setString(1, documento);
@@ -230,7 +218,7 @@ public class Repositorio {
                 }
             }
             
-            // If documento doesn't exist, proceed with insertion
+            // Si el documento no existe, proceder con la inserción
             try (PreparedStatement pst = conn.prepareStatement(
                     "INSERT INTO huesped (nombre, telefono, documento) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS)) {
@@ -260,7 +248,7 @@ public class Repositorio {
 
     public void editarHuesped(Integer id, String nombre, String telefono, String documento) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            // Check if documento already exists for another huesped
+            // Verificar si el documento ya existe para otro huésped
             try (PreparedStatement checkPst = conn.prepareStatement(
                     "SELECT COUNT(*) FROM huesped WHERE documento = ? AND id != ?")) {
                 checkPst.setString(1, documento);
@@ -300,11 +288,11 @@ public class Repositorio {
     private Reserva completarReserva(ResultSet rs) throws SQLException {
         Reserva reserva = new Reserva();
         
-        // Set the simple properties
+        // Establecer las propiedades simples
         reserva.setPrecioTotal(rs.getInt("preciototal"));
         reserva.setId(rs.getInt("id"));
         
-        // Handle dates - assuming they're stored as timestamps or dates in the database
+        // Manejar fechas
         java.sql.Date fechaEntrada = rs.getDate("fecha_de_ingreso");
         if (fechaEntrada != null) {
             reserva.setFechaDeEntrada(new java.util.Date(fechaEntrada.getTime()));
@@ -315,26 +303,26 @@ public class Repositorio {
             reserva.setFechaDeSalida(new java.util.Date(fechaSalida.getTime()));
         }
         
-        // Get the complete Huesped object
+        // Obtener el objeto completo de Huesped
         int huespedId = rs.getInt("huesped");
         Huesped huesped = getHuesped(huespedId);
         if (huesped == null) {
-            throw new SQLException("Huesped not found with ID: " + huespedId);
+            throw new SQLException("Huésped no encontrado con ID: " + huespedId);
         }
         reserva.setHuesped(huesped);
         
-        // Get the complete Habitacion object
+        // Obtener el objeto completo de Habitacion
         String habitacionId = rs.getString("habitacion");
         try {
             Integer idHabitacion = Integer.valueOf(habitacionId);
             Habitacion habitacion = getHabitacionById(idHabitacion);
             if (habitacion == null) {
-                throw new SQLException("Habitacion not found with number: " + idHabitacion);
+                throw new SQLException("Habitacion no encontrada con número: " + idHabitacion);
             }
             reserva.setHabitacion(habitacion);
         } catch (NumberFormatException e) {
-            // Handle case where habitacion is not a valid number
-            throw new SQLException("Invalid habitacion number: " + habitacionId, e);
+            // Manejar caso donde habitacion no es un número válido
+            throw new SQLException("Número de habitación inválido: " + habitacionId, e);
         }
         
         return reserva;
@@ -343,23 +331,23 @@ public class Repositorio {
 
     public Integer guardarReserva(Integer idHuesped, Integer idHabitacion, String fechaDeEntrada, String fechaDeSalida) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            // Get the room to calculate the total price
+            // Obtener la habitación para calcular el precio total
             Habitacion habitacion = getHabitacionById(idHabitacion);
             if (habitacion == null) {
-                throw new SQLException("Habitacion not found with ID: " + idHabitacion);
+                throw new SQLException("Habitacion no encontrada con ID: " + idHabitacion);
             }
             
-            // Check if guest exists
+            // Verificar si el huésped existe
             Huesped huesped = getHuesped(idHuesped);
             if (huesped == null) {
-                throw new SQLException("Huesped not found with ID: " + idHuesped);
+                throw new SQLException("Huésped no encontrado con ID: " + idHuesped);
             }
             
-            // Calculate the number of nights
+            // Calcular el número de noches
             java.sql.Date sqlFechaEntrada = java.sql.Date.valueOf(fechaDeEntrada);
             java.sql.Date sqlFechaSalida = java.sql.Date.valueOf(fechaDeSalida);
             
-            // Validate that check-in date is in the future
+            // Validar que la fecha de entrada sea en el futuro
             java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
             if (sqlFechaEntrada.before(today)) {
                 throw new SQLException("La fecha de entrada debe ser en el futuro");
@@ -372,17 +360,17 @@ public class Repositorio {
                 throw new SQLException("La fecha de salida debe ser posterior a la fecha de entrada");
             }
             
-            // Check if the room is available for the selected dates
+            // Verificar si la habitación está disponible en las fechas seleccionadas
             if (!isHabitacionDisponible(idHabitacion, fechaDeEntrada, fechaDeSalida)) {
                 throw new SQLException("La habitación no está disponible en las fechas seleccionadas");
             }
             
-            // Check if the guest is available for the selected dates
+            // Verificar si el huésped está disponible en las fechas seleccionadas
             if (!isHuespedDisponible(idHuesped, fechaDeEntrada, fechaDeSalida)) {
                 throw new SQLException("El huésped ya tiene una reserva en las fechas seleccionadas");
             }
             
-            // Calculate total price
+            // Calcular el precio total
             Integer precioTotal = (int) (diffInDays * habitacion.getPrecioPorNoche());
             
             try (PreparedStatement pst = conn.prepareStatement(
@@ -451,7 +439,7 @@ public class Repositorio {
     public List<Reserva> getReservasPorFecha(String fechaInicio, String fechaFin) throws SQLException {
         List<Reserva> reservas = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
-            // Convert string dates to java.sql.Date
+            // Convertir fechas de cadena a java.sql.Date
             java.sql.Date sqlFechaInicio = java.sql.Date.valueOf(fechaInicio);
             java.sql.Date sqlFechaFin = java.sql.Date.valueOf(fechaFin);
             System.out.println("Buscando reservas entre: " + sqlFechaInicio + " y " + sqlFechaFin); // Debug print
@@ -459,8 +447,8 @@ public class Repositorio {
                 "SELECT * FROM reserva " +
                 "WHERE fecha_de_ingreso <= ? AND fecha_de_salida >= ? " +
                 "ORDER BY id")) {
-                pst.setDate(1, sqlFechaFin);  // Check-in before search period ends
-                pst.setDate(2, sqlFechaInicio);  // Check-out after search period starts
+                pst.setDate(1, sqlFechaFin);  // Fecha de entrada antes de que termine el período de búsqueda
+                pst.setDate(2, sqlFechaInicio);  // Fecha de salida después de que comience el período de búsqueda
                 try (ResultSet res = pst.executeQuery()) {            
                     while (res.next()) {
                         reservas.add(completarReserva(res));
