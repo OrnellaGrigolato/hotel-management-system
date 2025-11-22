@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - dbdata:/var/lib/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: pw3
+      POSTGRES_PASSWORD: fichunl
+      TZ: UTC
+      PGTZ: UTC
+  admin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - 80:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+volumes:
+  dbdata:

@@ -1,0 +1,36 @@
+plugins {
+    id 'war'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'jakarta.platform:jakarta.jakartaee-web-api:10.0.0'
+    providedCompile 'jakarta.mvc:jakarta.mvc-api:2.1.0'
+    implementation 'org.postgresql:postgresql:42+'
+}
+
+task startServer(type: Exec) {
+    commandLine ASADMIN
+    args 'start-domain', '--debug'
+}
+
+task stopServer(type: Exec) {
+    commandLine ASADMIN
+    args "stop-domain"
+}
+
+task deploy(type: Exec, dependsOn: 'war') {
+    commandLine ASADMIN
+    args 'deploy', '--force=true', '--name=unidad5', "${war.archiveFile.get()}"
+    doLast {
+        println 'Navegar a http://localhost:8080/unidad5/app/autores'
+    }
+}
+
+task undeploy(type: Exec) {
+    commandLine ASADMIN
+    args 'undeploy', 'unidad5'
+}
